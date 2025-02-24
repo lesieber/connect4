@@ -1,5 +1,5 @@
 /** Updates the HTML user interface to match the given game state. */
-function updateHtml(game, grid) {
+function updateHtml(grid, game) {
   let cell = 0
   for (button of grid.getElementsByTagName("button")){
       let cellState = game.board[cell]
@@ -18,7 +18,7 @@ function updateStatus(status, game) {
 /** Drops a piece in the given column and updates the game state accordingly. */
 async function dropPiece(grid, status, column) {
   // TODO: Check if move is valid.
-  handleFetch(grid, status, `set/0/${column}`);
+  handleFetch(grid, status, `set/${column}`);
 }
 
 async function handleFetch(grid, status, url) {
@@ -32,13 +32,14 @@ async function handleFetch(grid, status, url) {
   // TODO: fetch game state until it's our turn again.
 }
 
+
 /* Connects the game state to the HTML user interface. */
 async function init() {
   // Find the HTML game grid.
-  let grid = document.getElementsByTagName('c4-grid')[0];
-  let status = document.getElementsByTagName('c4-status')[0];
+  let grid = document.querySelectorAll('.grid')[0];
+  let status = document.getElementsByTagName('status')[0];
   // Join a new game.
-  await handleFetch(grid, status, `get/0`);
+  await handleFetch(grid, status, `game`);
 
   // Install button click handlers for each button.
   let index = 0
